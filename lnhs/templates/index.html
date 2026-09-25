@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LNHS Learner Information System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="hero">
+  <img src="{{ url_for('static', filename='images/cover.jpg') }}" alt="Ligao National High School" class="hero-img">
+</header>
+
+<div class="app-bar">
+  <div class="app-bar-inner">
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="LNHS Seal" class="app-logo">
+    <div class="app-bar-text">
+      <h1>Learner Information System</h1>
+      <p class="app-sub">Keeping every learner's record accurate, organized, and easy to find.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="toolbar">
+    <div class="search-field">
+      <input type="text" id="searchInput" placeholder="Search by LRN, name, section, or guardian" autocomplete="off">
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-quiet" id="exportBtn">Export CSV</button>
+      <button class="btn btn-primary" id="addBtn">Add learner</button>
+    </div>
+  </div>
+
+  <div id="statusLine" class="status-line" aria-live="polite"></div>
+
+  <table class="ledger">
+    <thead>
+      <tr>
+        <th data-sort="lrn" class="col-lrn">LRN</th>
+        <th data-sort="name" class="col-name">Name</th>
+        <th data-sort="grade_level" class="col-grade">Grade &amp; Section</th>
+        <th data-sort="age" class="col-age">Age</th>
+        <th data-sort="guardian_name" class="col-guardian">Guardian</th>
+        <th class="col-contact">Contact No.</th>
+        <th class="col-actions"></th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- rows injected by script.js -->
+    </tbody>
+  </table>
+
+  <div id="emptyState" class="empty-state" hidden>
+    <p>No records yet.</p>
+    <button class="btn btn-primary" id="emptyAddBtn">Add the first learner</button>
+  </div>
+</main>
+
+<!-- Add / Edit dialog -->
+<div id="overlay" class="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <h2 id="dialogTitle">Add learner</h2>
+    <form id="learnerForm" novalidate>
+      <div class="field">
+        <label for="fieldLrn">LRN (12 digits)</label>
+        <input type="text" id="fieldLrn" inputmode="numeric" maxlength="12" required>
+      </div>
+      <div class="field">
+        <label for="fieldName">Full Name</label>
+        <input type="text" id="fieldName" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fieldGradeLevel">Grade Level</label>
+          <input type="number" id="fieldGradeLevel" min="7" max="12" step="1" required>
+        </div>
+        <div class="field">
+          <label for="fieldSection">Section</label>
+          <input type="text" id="fieldSection" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fieldAge">Age</label>
+        <input type="number" id="fieldAge" min="10" max="25" step="1" required>
+      </div>
+      <div class="field">
+        <label for="fieldGuardianName">Guardian Name</label>
+        <input type="text" id="fieldGuardianName" required>
+      </div>
+      <div class="field">
+        <label for="fieldGuardianContact">Guardian Contact Number</label>
+        <input type="text" id="fieldGuardianContact" inputmode="numeric" placeholder="09171234567" required>
+      </div>
+      <p id="formError" class="form-error" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-quiet" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
